@@ -23,23 +23,24 @@ function __gb
     # $argv[1] $argv[2..(count $argv)]
     set res (string split "" (string trim $argv))
     set first $res[1]
-    set length (count $res)
     set last ""
 
     # >
-    if [ $res[2] = "-" ]
-        set last $res[3]
+    # if just one
+    if [ (count $res) -eq 1 ]
+        __git_branch $argv
+        return
     # >
-    # if discrete list of args
-    else if [ $length -gt 1 -a $res[2] != "-" ]
+    # if range
+    else if [ $res[2] != "-" ]
         for i in $res
             __git_branch $i
         end
     # >
+    # if discrete list of args
     else
-        # just one
-        __git_branch $argv
-        return
+]       set last $res[3]
+    # >
     end
 
     # last exists
