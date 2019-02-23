@@ -21,19 +21,26 @@ end
 function __gb
     # number
     # $argv[1] $argv[2..(count $argv)]
-    set res (string split "-" -- (string trim $argv))
+    set res (string split "" (string trim $argv))
     set first $res[1]
-    set length (count $res)
     set last ""
 
     # >
-    if [ $length -gt 1 ]
-        set last $res[2]
-    # >
-    else
-        # just one
+    # if just one
+    if [ (count $res) -eq 1 ]
         __git_branch $argv
         return
+    # >
+    # if range
+    else if [ $res[2] != "-" ]
+        for i in $res
+            __git_branch $i
+        end
+    # >
+    # if discrete list of args
+    else
+]       set last $res[3]
+    # >
     end
 
     # last exists
@@ -53,8 +60,6 @@ function __gb
         else
           echo 'Argument is not valid.'
         end
-    else
-        git branch $argv[1] $first
     end
 end
 
