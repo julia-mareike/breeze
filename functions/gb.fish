@@ -60,9 +60,6 @@ function __gb
         else
           echo 'Argument is not valid.'
         end
-    # > what does this do?
-    # else
-    #    git branch $argv[1] $first
     end
 end
 
